@@ -1,0 +1,15 @@
+<div class="line-chart-card">
+  <div class="card-header">
+    <h2>Multi Line plot</h2>
+  </div>
+  <div class="card-body">
+    <canvas
+      baseChart
+      [type]="'line'"
+      [datasets]="lineChartData"
+      [labels]="lineChartLabels"
+      [options]="lineChartOptions"
+    >
+    </canvas>
+  </div>
+</div>

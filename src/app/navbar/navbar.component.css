@@ -1,0 +1,48 @@
+.navbar {
+    background-color: #0a4275;
+    padding: 1px 1px;
+}
+
+.navbar-brand {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    letter-spacing: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.nav-link {
+    color: #fff;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #ccc;
+}
+
+.navbar-toggler {
+    border: none;
+    background-color: transparent;
+}
+
+.navbar-toggler-icon {
+    font-size: 24px;
+    color: #fff;
+}
+.navbar-brand img {
+    height: 100px;
+    /* set the desired height for the logo image */
+    width: 200px;
+    /* maintain the aspect ratio of the image */
+    object-fit: cover;
+    /* zoom in on the image while maintaining its aspect ratio */
+    /* margin-top: 30px; */
+    
+
+}

@@ -1,0 +1,25 @@
+<div class="pie-chart-card">
+  <div class="card-header">
+    <h2>Label</h2>
+  </div>
+  <div class="card-body">
+    <canvas
+      baseChart
+      [type]="'pie'"
+      [datasets]="pieChartData"
+      [labels]="pieChartLabels"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+      [legend]="pieChartLegend"
+    >
+    </canvas>
+  </div>
+  <!-- <div class="card-footer">
+    <div class="pie-chart-status">
+      <app-pie-chart-status></app-pie-chart-status>
+    </div>
+    <div class="pie-chart-priority">
+      <app-pie-chart-priority></app-pie-chart-priority>
+    </div>
+  </div> -->
+</div>

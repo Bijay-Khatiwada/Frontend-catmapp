@@ -1,88 +1,102 @@
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="grid-container">
-        <div *ngFor="let task of tasks_list" class="grid-item">
-          <div
-            [class.bg-warning]="isTaskStartWarning(task)"
-            [class.bg-success]="isTaskCompleted(task)"
-            [class.bg-danger]="isTaskOverdue(task)"
-            class="card"
-          >
-            <div class="card-header bg-primary text-white">
-              {{ task.name }}
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Task Details</h5>
-              <p class="card-text">Label: {{ task.label }}</p>
-              <p class="card-text">Time: {{ task.time }} hours</p>
-              <p class="card-text">Status: {{ task.status }}</p>
-              <p class="card-text">Priority: {{ task.priority }}</p>
-              <p class="card-text">Description: {{ task.description }}</p>
-              <p class="card-text">Date: {{ task.date }}</p>
-            </div>
-            <div class="card-footer" [hidden]="isTaskCompleted(task)">
-              <button
-                class="btn btn-danger m-1"
-                (click)="delete_data(task._id)"
-              >
-                Delete
-              </button>
-              <a
-                routerLink="/tasks/{{ task._id }}/update"
-                class="btn btn-warning m-1"
-                >Update</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<div class="container my-3">
+<div class="container-fluid px-3 py-0 bg-dark text-light flex-grow-1 d-flex flex-column">
 
-  <!-- Controls: Sorting and Layout Toggle -->
-  <div class="row mb-3 align-items-end">
-    <div class="col-md-6">
-      <label for="sortOption" class="form-label">Sort By:</label>
-      <select id="sortOption" class="form-select" [(ngModel)]="sortOption" (change)="applySorting()">
-        <option value="priority">Priority</option>
-        <option value="date">Date</option>
-        <option value="status">Status</option>
-      </select>
-    </div>
-    <div class="col-md-6 text-end">
-      <label class="form-label me-2">View:</label>
-      <button class="btn btn-outline-primary me-1" (click)="layout = 'grid'">Grid</button>
-      <button class="btn btn-outline-secondary" (click)="layout = 'list'">List</button>
-    </div>
+<!-- Controls: Sorting, Filter, Search, View Toggle (all in one row) -->
+<div class="row mb-3 align-items-end mt-3">
+  <!-- Sort By -->
+  <div class="col-md-3">
+    <label for="sortOption" class="form-label">Sort By:</label>
+    <select
+      id="sortOption"
+      class="form-select bg-dark text-white"
+      [(ngModel)]="sortOption"
+      (change)="applySorting()"
+    >
+      <option value="priority">Priority</option>
+      <option value="date">Date</option>
+      <option value="status">Status</option>
+    </select>
   </div>
+
+  <!-- Filter -->
+  <div class="col-md-3">
+    <label for="statusFilter" class="form-label">Filter:</label>
+    <select
+      id="statusFilter"
+      class="form-select bg-dark text-white"
+      [(ngModel)]="statusFilter"
+      (change)="applySorting()"
+    >
+      <option value="all">All</option>
+      <option value="Not Started">Not Started</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+  </div>
+
+  <!-- Search -->
+  <div class="col-md-3">
+    <label for="searchText" class="form-label">Search:</label>
+    <input
+      id="searchText"
+      type="text"
+      class="form-control bg-dark text-white"
+      placeholder="Search by task name..."
+      [(ngModel)]="searchText"
+      (input)="applySorting()"
+    />
+  </div>
+
+  <!-- View Toggle -->
+  <div class="col-md-3 text-md-end">
+    <label class="form-label me-2 d-block">View:</label>
+    <button
+      class="btn btn-outline-primary me-1"
+      [class.active]="layout === 'grid'"
+      (click)="layout = 'grid'"
+    >
+      Grid
+    </button>
+    <button
+      class="btn btn-outline-primary"
+      [class.active]="layout === 'list'"
+      (click)="layout = 'list'"
+    >
+      List
+    </button>
+  </div>
+</div>
 
   <!-- Task Display -->
-  <div [ngClass]="{'grid-container': layout === 'grid', 'list-container': layout === 'list'}">
-    <div *ngFor="let task of tasks_list" class="grid-item">
+  <div [ngClass]="{'row g-3 flex-grow-1': layout === 'grid', 'list-group flex-grow-1': layout === 'list'}">
+    <div
+      *ngFor="let task of tasks_list"
+      [ngClass]="{
+        'col-sm-6 col-md-4 col-lg-3': layout === 'grid',
+        'list-group-item bg-dark text-light mb-2 rounded': layout === 'list'
+      }"
+    >
       <div
-        class="card w-100"
-        [class.bg-warning]="isTaskStartWarning(task)"
-        [class.bg-success]="isTaskCompleted(task)"
-        [class.bg-danger]="isTaskOverdue(task)"
+        class="card shadow-sm rounded text-white p-2"
+        [ngClass]="{
+          'bg-success': isTaskCompleted(task),
+          'bg-secondary': !isTaskCompleted(task) && task.status === 'In Progress',
+          'custom-bg-red': !isTaskCompleted(task) && task.status === 'Not Started'
+        }"
       >
-        <div class="card-header bg-primary text-white">
+        <div class="card-header fw-semibold small">
           {{ task.name }}
         </div>
-        <div class="card-body">
-          <h5 class="card-title">Task Details</h5>
-          <p class="card-text">Label: {{ task.label }}</p>
-          <p class="card-text">Time: {{ task.time }} hours</p>
-          <p class="card-text">Status: {{ task.status }}</p>
-          <p class="card-text">Priority: {{ task.priority }}</p>
-          <p class="card-text">Description: {{ task.description }}</p>
-          <p class="card-text">Date: {{ task.date }}</p>
+        <div class="card-body small">
+          <p class="mb-1"><strong>Label:</strong> {{ task.label }}</p>
+          <p class="mb-1"><strong>Time:</strong> {{ task.time }} hours</p>
+          <p class="mb-1"><strong>Status:</strong> {{ task.status }}</p>
+          <p class="mb-1"><strong>Priority:</strong> {{ task.priority }}</p>
+          <p class="mb-1"><strong>Description:</strong> {{ task.description }}</p>
+          <p class="mb-0"><strong>Date:</strong> {{ task.date }}</p>
         </div>
-        <div class="card-footer" [hidden]="isTaskCompleted(task)">
-          <button class="btn btn-danger m-1" (click)="delete_data(task._id)">Delete</button>
-          <a [routerLink]="['/tasks', task._id, 'update']" class="btn btn-warning m-1">Update</a>
+        <div class="card-footer bg-transparent border-0 p-2" [hidden]="isTaskCompleted(task)">
+          <button class="btn btn-sm btn-danger me-1" (click)="delete_data(task._id)">Delete</button>
+          <a [routerLink]="['/tasks', task._id, 'update']" class="btn btn-sm btn-warning">Update</a>
         </div>
       </div>
     </div>

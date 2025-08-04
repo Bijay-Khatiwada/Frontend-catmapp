@@ -1,83 +1,50 @@
-.container {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 10px;
-    overflow-y: auto;
-}
+/* Optional minimal custom CSS */
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 10px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-}
-
-.grid-item {
-    background-color: #fff;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.grid-item:nth-child(odd) {
-    background-color: #c8c7c7;
-    /* light gray */
-}
-
-.grid-item:nth-child(even) {
-    background-color: #ffffff;
-    /* white */
-}
+/* Make sure cards fill their grid columns fully */
 .card {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 100%;
 }
 
-.card-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+/* Slight margin for the container so content doesn’t hug the edges */
+.container-fluid {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-.card-body {
-    padding: 20px;
+/* Ensure buttons show active state clearly */
+.btn-outline-primary.active {
+  background-color: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
 }
 
-.card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/* Scrollbar style for better look in overflow container */
+.container-fluid::-webkit-scrollbar {
+  width: 8px;
 }
 
-.card-text {
-    font-size: 14px;
-    margin-bottom: 10px;
+.container-fluid::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+/* Remove any forced scrollbars */
+:host {
+  display: block;
+  overflow: hidden;
 }
 
+/* Custom muted red (dark, not bright) */
+.custom-bg-red {
+  background-color: #5c1a1a !important;
+  color: #fff;
+}
+
+/* Ensure cards fill space without adding scrollbars */
+.card {
+  border: none;
+}
+
+/* Remove unnecessary card border if present */
 .card-footer {
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
-
-.btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 5px;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.btn-warning {
-    background-color: #ffc107;
-    color: #fff;
-
+  border-top: none;
 }

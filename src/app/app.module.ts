@@ -25,6 +25,7 @@ import { PieChartPriorityComponent } from './pie-chart-priority/pie-chart-priori
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { PieChartLabelsComponent } from './pie-chart-labels/pie-chart-labels.component';
 import { LineChartLabelComponent } from './line-chart-label/line-chart-label.component';
+import { AddTaskModalComponent } from './add-task-modal/add-task-modal.component';
  var routes: any = [
   {
     path: '', // Updated to 'tasks'
@@ -54,7 +55,7 @@ import { LineChartLabelComponent } from './line-chart-label/line-chart-label.com
 ];
 @NgModule({
   declarations: [
-    AppComponent, TasksComponent, NavbarComponent, FooterComponent, AddTaskComponent, UpdateTaskComponent, PieChartStatusComponent, PieChartPriorityComponent, AnalyticsComponent, PieChartLabelsComponent, LineChartLabelComponent
+    AppComponent, TasksComponent, NavbarComponent, FooterComponent, AddTaskComponent, UpdateTaskComponent, PieChartStatusComponent, PieChartPriorityComponent, AnalyticsComponent, PieChartLabelsComponent, LineChartLabelComponent, AddTaskModalComponent
   ],
   imports: [
     BrowserModule,    

@@ -15,6 +15,7 @@ export class TasksComponent {
   statusFilter: string = 'all';
   searchText: string = '';
   statusFilterOptions = ['all', 'not-started', 'in-progress', 'completed', 'not-completed'];
+  showAddTaskModal = false;
 
 
   constructor(public webService: WebService, authService: AuthService) {}
@@ -25,6 +26,9 @@ export class TasksComponent {
       this.applySorting();
     });
   }
+  closeAddTaskModal() {
+  this.showAddTaskModal = false;
+}
 
   applySorting() {
   // Step 1: Filter

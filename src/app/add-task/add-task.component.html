@@ -1,151 +1,83 @@
-<!-- update.component.html -->
-<div class="container">
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-sm-12 col-md-8">
-        <!-- Card container for the form -->
-        <div class="card">
-          <div class="card-body">
-            <h2 class="text-center mb-4">Add Task/Event Details</h2>
-            <!-- Form for adding new task -->
-            <form [formGroup]="angForm" (ngSubmit)="onSubmit()">
-              <!-- Task name input field -->
-              <div class="form-group mb-3">
-                <label for="name">Task/Event name</label>
-                <input
-                  type="text"
-                  id="name"
-                  class="form-control"
-                  formControlName="name"
-                  placeholder="Enter name"
-                />
-                <small *ngIf="isInvalid('name')" class="text-danger"
-                  >Name is required</small
-                >
-              </div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-8 col-lg-6">
+      <div class="card bg-dark text-light shadow-lg border-0">
+        <div class="card-header bg-secondary text-center">
+          <h3 class="mb-0">Add Task / Event</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="angForm" (ngSubmit)="onSubmit()">
+            
+            <!-- Name -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Task/Event Name</label>
+              <input type="text" id="name" class="form-control bg-dark text-white border-secondary" formControlName="name" placeholder="Enter task name">
+              <small *ngIf="isInvalid('name')" class="text-danger">Name is required</small>
+            </div>
 
-              <!-- Task label input field -->
-              <div class="form-group mb-3">
-                <label for="label">Task/Event label</label>
-                <input
-                  type="text"
-                  id="label"
-                  class="form-control"
-                  formControlName="label"
-                  placeholder="Enter label"
-                />
-                <small *ngIf="isInvalid('label')" class="text-danger"
-                  >Label is required</small
-                >
-              </div>
+            <!-- Label -->
+            <div class="mb-3">
+              <label for="label" class="form-label">Label</label>
+              <input type="text" id="label" class="form-control bg-dark text-white border-secondary" formControlName="label" placeholder="Enter label">
+              <small *ngIf="isInvalid('label')" class="text-danger">Label is required</small>
+            </div>
 
-              <!-- Task time input field -->
-              <div class="form-group mb-3">
-                <label for="time">Task/Event time in hours</label>
-                <input
-                  type="text"
-                  id="time"
-                  class="form-control"
-                  formControlName="time"
-                  placeholder="Enter time"
-                />
-                <small *ngIf="isInvalid('time')" class="text-danger"
-                  >Time is required</small
-                >
-              </div>
-              <!-- Dropdown input field with options -->
-              <div class="form-group mb-3">
-                <label for="status">Status</label>
+            <!-- Time -->
+            <div class="mb-3">
+              <label for="time" class="form-label">Time (in hours)</label>
+              <input type="text" id="time" class="form-control bg-dark text-white border-secondary" formControlName="time" placeholder="Enter time">
+              <small *ngIf="isInvalid('time')" class="text-danger">Time is required</small>
+            </div>
 
-                <select
-                  id="status"
-                  class="form-control"
-                  formControlName="status"
-                >
-                  <option value="Not Started" [defaultSelected]="true">
-                    Not Started
-                  </option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                </select>
-                <small *ngIf="isInvalid('status')" class="text-danger"
-                  >Status</small
-                >
-              </div>
+            <!-- Status -->
+            <div class="mb-3">
+              <label for="status" class="form-label">Status</label>
+              <select id="status" class="form-select bg-dark text-white border-secondary" formControlName="status">
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+              <small *ngIf="isInvalid('status')" class="text-danger">Status is required</small>
+            </div>
 
-              <!-- Task description input field -->
-              <div class="form-group mb-3">
-                <label for="description">Description</label>
-                <input
-                  id="description"
-                  class="form-control"
-                  formControlName="description"
-                  placeholder="Description"
-                />
-                <small *ngIf="isInvalid('description')" class="text-danger"
-                  >Description</small
-                >
-              </div>
+            <!-- Description -->
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea id="description" rows="2" class="form-control bg-dark text-white border-secondary" formControlName="description" placeholder="Task details..."></textarea>
+              <small *ngIf="isInvalid('description')" class="text-danger">Description is required</small>
+            </div>
 
-              <!-- Dropdown input field with options -->
-              <div class="form-group mb-3">
-                <label for="priority">Priority</label>
-                <select
-                  id="priority"
-                  class="form-control"
-                  formControlName="priority"
-                >
-                  <option value="Low" [defaultSelected]="true">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
-                <small *ngIf="isInvalid('priority')" class="text-danger"
-                  >Priority</small
-                >
-              </div>
-              <!-- Task date input field -->
-              <div class="form-group mb-3">
-                <label for="Date">Date</label>
-                <input
-                  id="Date"
-                  class="form-control"
-                  formControlName="date"
-                  placeholder="date"
-                  type="date"
-                />
-                <small *ngIf="isInvalid('date')" class="text-danger"
-                  >Date</small
-                >
-              </div>
+            <!-- Priority -->
+            <div class="mb-3">
+              <label for="priority" class="form-label">Priority</label>
+              <select id="priority" class="form-select bg-dark text-white border-secondary" formControlName="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+              <small *ngIf="isInvalid('priority')" class="text-danger">Priority is required</small>
+            </div>
 
-              <!-- Submit button for the form -->
-              <button
-                type="submit"
-                class="btn btn-primary"
-                [disabled]="isIncomplete()"
-              >
-                Add Task
-              </button>
+            <!-- Date -->
+            <div class="mb-3">
+              <label for="date" class="form-label">Date</label>
+              <input type="date" id="date" class="form-control bg-dark text-white border-secondary" formControlName="date">
+              <small *ngIf="isInvalid('date')" class="text-danger">Date is required</small>
+            </div>
 
-              <!-- Cancel button for the form -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                (click)="onCancel()"
-              >
-                Cancel
-              </button>
-            </form>
-          </div>
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="submit" class="btn btn-success px-4" [disabled]="isIncomplete()">Add Task</button>
+              <button type="button" class="btn btn-outline-light px-4" (click)="onCancel()">Cancel</button>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
-    <div
-      class="success-message"
-      *ngIf="showSuccessMessage"
-      style="display: block"
-    >
-      Successfully added tasks!
+
+      <!-- Success Message -->
+      <div *ngIf="showSuccessMessage" class="alert alert-success mt-3 text-center" role="alert">
+        Successfully added task!
+      </div>
     </div>
   </div>
 </div>

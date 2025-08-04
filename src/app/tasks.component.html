@@ -45,6 +45,17 @@
       (input)="applySorting()"
     />
   </div>
+  <div class="col-md-2 bg-dark text-white">
+  <label for="searchText" class="form-label">Search:</label>
+  <input
+    id="searchText"
+    type="text"
+    class="form-control bg-dark text-white"
+    placeholder="Search by task name..."
+    [(ngModel)]="searchText"
+    (input)="applySorting()"
+  />
+</div>
 
   <!-- View Toggle -->
   <div class="col-md-3 text-md-end">
@@ -65,6 +76,10 @@
     </button>
   </div>
 </div>
+<app-add-task-modal
+  *ngIf="showAddTaskModal"
+  (close)="closeAddTaskModal()"
+></app-add-task-modal>
 
   <!-- Task Display -->
   <div [ngClass]="{'row g-3 flex-grow-1': layout === 'grid', 'list-group flex-grow-1': layout === 'list'}">

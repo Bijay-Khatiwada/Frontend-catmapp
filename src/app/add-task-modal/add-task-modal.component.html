@@ -1,0 +1,143 @@
+<!-- add-task-modal.component.html -->
+<div
+  class="modal-backdrop fade show"
+  style="backdrop-filter: blur(5px); position: fixed; inset: 0; z-index: 1040;"
+></div>
+
+<div
+  class="modal d-block"
+  tabindex="-1"
+  role="dialog"
+  aria-modal="true"
+  style="background: transparent; position: fixed; inset: 0; z-index: 1050; display: flex; align-items: center; justify-content: center;"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark text-light shadow-lg border-0 rounded">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Add Task / Event</h5>
+        <button
+  type="button"
+  class="btn-close btn-close-white"
+  aria-label="Close"
+  (click)="closeModal()"
+></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="angForm" (ngSubmit)="onSubmit()">
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Task/Event Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control bg-dark text-white border-secondary"
+              formControlName="name"
+              placeholder="Enter task name"
+            />
+            <small *ngIf="isInvalid('name')" class="text-danger">Name is required</small>
+          </div>
+
+          <!-- Label -->
+          <div class="mb-3">
+            <label for="label" class="form-label">Label</label>
+            <input
+              type="text"
+              id="label"
+              class="form-control bg-dark text-white border-secondary"
+              formControlName="label"
+              placeholder="Enter label"
+            />
+            <small *ngIf="isInvalid('label')" class="text-danger">Label is required</small>
+          </div>
+
+          <!-- Time -->
+          <div class="mb-3">
+            <label for="time" class="form-label">Time (in hours)</label>
+            <input
+              type="text"
+              id="time"
+              class="form-control bg-dark text-white border-secondary"
+              formControlName="time"
+              placeholder="Enter time"
+            />
+            <small *ngIf="isInvalid('time')" class="text-danger">Time is required</small>
+          </div>
+
+          <!-- Status -->
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select
+              id="status"
+              class="form-select bg-dark text-white border-secondary"
+              formControlName="status"
+            >
+              <option value="Not Started">Not Started</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <small *ngIf="isInvalid('status')" class="text-danger">Status is required</small>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              id="description"
+              rows="2"
+              class="form-control bg-dark text-white border-secondary"
+              formControlName="description"
+              placeholder="Task details..."
+            ></textarea>
+            <small *ngIf="isInvalid('description')" class="text-danger">Description is required</small>
+          </div>
+
+          <!-- Priority -->
+          <div class="mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <select
+              id="priority"
+              class="form-select bg-dark text-white border-secondary"
+              formControlName="priority"
+            >
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+            <small *ngIf="isInvalid('priority')" class="text-danger">Priority is required</small>
+          </div>
+
+          <!-- Date -->
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input
+              type="date"
+              id="date"
+              class="form-control bg-dark text-white border-secondary"
+              formControlName="date"
+            />
+            <small *ngIf="isInvalid('date')" class="text-danger">Date is required</small>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between mt-4">
+            <button
+              type="submit"
+              class="btn btn-success px-4"
+              [disabled]="isIncomplete()"
+            >
+              Add Task
+            </button>
+            <button
+  type="button"
+  class="btn btn-outline-light px-4"
+  (click)="closeModal()"
+>
+  Cancel
+</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

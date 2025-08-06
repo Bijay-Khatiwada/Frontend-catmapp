@@ -1,88 +1,96 @@
-<div class="container-fluid px-3 py-0 bg-dark text-light flex-grow-1 d-flex flex-column">
+<!-- Background overlay for modal blur -->
+<div
+  class="modal-overlay"
+  *ngIf="showAddTaskModal"
+></div>
 
-<!-- Controls: Sorting, Filter, Search, View Toggle (all in one row) -->
-<div class="row mb-3 align-items-end mt-3">
-  <!-- Sort By -->
-  <div class="col-md-3">
-    <label for="sortOption" class="form-label">Sort By:</label>
-    <select
-      id="sortOption"
-      class="form-select bg-dark text-white"
-      [(ngModel)]="sortOption"
-      (change)="applySorting()"
-    >
-      <option value="priority">Priority</option>
-      <option value="date">Date</option>
-      <option value="status">Status</option>
-    </select>
-  </div>
+<!-- Main content with conditional blur -->
+<div
+  class="container-fluid px-3 py-0 bg-dark text-light flex-grow-1 d-flex flex-column"
+  [ngClass]="{ 'blur-background': showAddTaskModal }"
+>
+  <!-- Controls: Sorting, Filter, Search, View Toggle, Add Button -->
+  <div class="row mb-3 align-items-end mt-3">
+    <!-- Sort By -->
+    <div class="col-md-3">
+      <label for="sortOption" class="form-label">Sort By:</label>
+      <select
+        id="sortOption"
+        class="form-select bg-dark text-white"
+        [(ngModel)]="sortOption"
+        (change)="applySorting()"
+      >
+        <option value="priority">Priority</option>
+        <option value="date">Date</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
 
-  <!-- Filter -->
-  <div class="col-md-3">
-    <label for="statusFilter" class="form-label">Filter:</label>
-    <select
-      id="statusFilter"
-      class="form-select bg-dark text-white"
-      [(ngModel)]="statusFilter"
-      (change)="applySorting()"
-    >
-      <option value="all">All</option>
-      <option value="Not Started">Not Started</option>
-      <option value="In Progress">In Progress</option>
-      <option value="Completed">Completed</option>
-    </select>
-  </div>
+    <!-- Filter -->
+    <div class="col-md-3">
+      <label for="statusFilter" class="form-label">Filter:</label>
+      <select
+        id="statusFilter"
+        class="form-select bg-dark text-white"
+        [(ngModel)]="statusFilter"
+        (change)="applySorting()"
+      >
+        <option value="all">All</option>
+        <option value="Not Started">Not Started</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
 
-  <!-- Search -->
-  <div class="col-md-3">
-    <label for="searchText" class="form-label">Search:</label>
-    <input
-      id="searchText"
-      type="text"
-      class="form-control bg-dark text-white"
-      placeholder="Search by task name..."
-      [(ngModel)]="searchText"
-      (input)="applySorting()"
-    />
+    <!-- Search -->
+    <div class="col-md-3">
+      <label for="searchText" class="form-label">Search:</label>
+      <input
+        id="searchText"
+        type="text"
+        class="form-control bg-dark text-white"
+        placeholder="Search by task name..."
+        [(ngModel)]="searchText"
+        (input)="applySorting()"
+      />
+    </div>
+
+    <!-- Add Task Button -->
+    <div class="col-md-3 d-flex align-items-end">
+      <button class="btn btn-success w-100" (click)="openAddTaskModal()">
+        + Add Task
+      </button>
+    </div>
   </div>
-  <div class="col-md-2 bg-dark text-white">
-  <label for="searchText" class="form-label">Search:</label>
-  <input
-    id="searchText"
-    type="text"
-    class="form-control bg-dark text-white"
-    placeholder="Search by task name..."
-    [(ngModel)]="searchText"
-    (input)="applySorting()"
-  />
-</div>
 
   <!-- View Toggle -->
-  <div class="col-md-3 text-md-end">
-    <label class="form-label me-2 d-block">View:</label>
-    <button
-      class="btn btn-outline-primary me-1"
-      [class.active]="layout === 'grid'"
-      (click)="layout = 'grid'"
-    >
-      Grid
-    </button>
-    <button
-      class="btn btn-outline-primary"
-      [class.active]="layout === 'list'"
-      (click)="layout = 'list'"
-    >
-      List
-    </button>
+  <div class="row mb-3">
+    <div class="col text-end">
+      <label class="form-label me-2">View:</label>
+      <button
+        class="btn btn-outline-primary me-1"
+        [class.active]="layout === 'grid'"
+        (click)="layout = 'grid'"
+      >
+        Grid
+      </button>
+      <button
+        class="btn btn-outline-primary"
+        [class.active]="layout === 'list'"
+        (click)="layout = 'list'"
+      >
+        List
+      </button>
+    </div>
   </div>
-</div>
-<app-add-task-modal
-  *ngIf="showAddTaskModal"
-  (close)="closeAddTaskModal()"
-></app-add-task-modal>
 
   <!-- Task Display -->
-  <div [ngClass]="{'row g-3 flex-grow-1': layout === 'grid', 'list-group flex-grow-1': layout === 'list'}">
+  <div
+    [ngClass]="{
+      'row g-3 flex-grow-1': layout === 'grid',
+      'list-group flex-grow-1': layout === 'list'
+    }"
+  >
     <div
       *ngFor="let task of tasks_list"
       [ngClass]="{
@@ -94,8 +102,10 @@
         class="card shadow-sm rounded text-white p-2"
         [ngClass]="{
           'bg-success': isTaskCompleted(task),
-          'bg-secondary': !isTaskCompleted(task) && task.status === 'In Progress',
-          'custom-bg-red': !isTaskCompleted(task) && task.status === 'Not Started'
+          'bg-secondary':
+            !isTaskCompleted(task) && task.status === 'In Progress',
+          'custom-bg-red':
+            !isTaskCompleted(task) && task.status === 'Not Started'
         }"
       >
         <div class="card-header fw-semibold small">
@@ -106,14 +116,35 @@
           <p class="mb-1"><strong>Time:</strong> {{ task.time }} hours</p>
           <p class="mb-1"><strong>Status:</strong> {{ task.status }}</p>
           <p class="mb-1"><strong>Priority:</strong> {{ task.priority }}</p>
-          <p class="mb-1"><strong>Description:</strong> {{ task.description }}</p>
+          <p class="mb-1">
+            <strong>Description:</strong> {{ task.description }}
+          </p>
           <p class="mb-0"><strong>Date:</strong> {{ task.date }}</p>
         </div>
-        <div class="card-footer bg-transparent border-0 p-2" [hidden]="isTaskCompleted(task)">
-          <button class="btn btn-sm btn-danger me-1" (click)="delete_data(task._id)">Delete</button>
-          <a [routerLink]="['/tasks', task._id, 'update']" class="btn btn-sm btn-warning">Update</a>
+        <div
+          class="card-footer bg-transparent border-0 p-2"
+          [hidden]="isTaskCompleted(task)"
+        >
+          <button
+            class="btn btn-sm btn-danger me-1"
+            (click)="delete_data(task._id)"
+          >
+            Delete
+          </button>
+          <a
+            [routerLink]="['/tasks', task._id, 'update']"
+            class="btn btn-sm btn-warning"
+            >Update</a
+          >
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Add Task Modal (outside blur container) -->
+<app-add-task-modal
+  *ngIf="showAddTaskModal"
+  (close)="closeAddTaskModal()"
+  (taskAdded)="handleTaskAdded()"
+></app-add-task-modal>

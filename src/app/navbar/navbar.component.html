@@ -4,7 +4,7 @@
       <img
         src="../../assets/images/white1.png"
         alt="Logo"
-        style="height: 50px; width: 100px;"
+        style="height: 50px; width: 100px"
         class="d-inline-block align-middle"
       />
     </a>
@@ -26,18 +26,30 @@
         <li class="nav-item">
           <a class="nav-link text-light" href="/tasks">Home</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link text-light" href="/add-task">Add Task</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link text-light" href="/analytics">Analytics</a>
         </li>
         <li class="nav-item">
-          <ng-container *ngIf="authService.isAuthenticated$ | async; else loggedOut">
-            <button class="btn btn-outline-light btn-sm ms-lg-3" (click)="authService.loginWithPopup()">LOGOUT</button>
+          <ng-container
+            *ngIf="authService.isAuthenticated$ | async; else loggedOut"
+          >
+            <button
+              class="btn btn-outline-light btn-sm ms-lg-3"
+              (click)="authService.loginWithPopup()"
+            >
+              LOGOUT
+            </button>
           </ng-container>
           <ng-template #loggedOut>
-            <button class="btn btn-primary btn-sm ms-lg-3" (click)="authService.loginWithPopup()">LOGIN</button>
+            <button
+              class="btn btn-primary btn-sm ms-lg-3"
+              (click)="authService.loginWithPopup()"
+            >
+              LOGIN
+            </button>
           </ng-template>
         </li>
       </ul>

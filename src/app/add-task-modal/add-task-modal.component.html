@@ -1,7 +1,7 @@
 <!-- add-task-modal.component.html -->
 <div
   class="modal-backdrop fade show"
-  style="backdrop-filter: blur(5px); position: fixed; inset: 0; z-index: 1040;"
+  style="backdrop-filter: blur(5px); position: fixed; inset: 0; z-index: 1040"
 ></div>
 
 <div
@@ -9,22 +9,29 @@
   tabindex="-1"
   role="dialog"
   aria-modal="true"
-  style="background: transparent; position: fixed; inset: 0; z-index: 1050; display: flex; align-items: center; justify-content: center;"
+  style="
+    background: transparent;
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
 >
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content bg-dark text-light shadow-lg border-0 rounded">
       <div class="modal-header border-0">
         <h5 class="modal-title">Add Task / Event</h5>
         <button
-  type="button"
-  class="btn-close btn-close-white"
-  aria-label="Close"
-  (click)="closeModal()"
-></button>
+          type="button"
+          class="btn-close btn-close-white"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="angForm" (ngSubmit)="onSubmit()">
-
           <!-- Name -->
           <div class="mb-3">
             <label for="name" class="form-label">Task/Event Name</label>
@@ -35,7 +42,9 @@
               formControlName="name"
               placeholder="Enter task name"
             />
-            <small *ngIf="isInvalid('name')" class="text-danger">Name is required</small>
+            <small *ngIf="isInvalid('name')" class="text-danger"
+              >Name is required</small
+            >
           </div>
 
           <!-- Label -->
@@ -48,7 +57,9 @@
               formControlName="label"
               placeholder="Enter label"
             />
-            <small *ngIf="isInvalid('label')" class="text-danger">Label is required</small>
+            <small *ngIf="isInvalid('label')" class="text-danger"
+              >Label is required</small
+            >
           </div>
 
           <!-- Time -->
@@ -61,7 +72,9 @@
               formControlName="time"
               placeholder="Enter time"
             />
-            <small *ngIf="isInvalid('time')" class="text-danger">Time is required</small>
+            <small *ngIf="isInvalid('time')" class="text-danger"
+              >Time is required</small
+            >
           </div>
 
           <!-- Status -->
@@ -76,7 +89,9 @@
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
             </select>
-            <small *ngIf="isInvalid('status')" class="text-danger">Status is required</small>
+            <small *ngIf="isInvalid('status')" class="text-danger"
+              >Status is required</small
+            >
           </div>
 
           <!-- Description -->
@@ -89,7 +104,9 @@
               formControlName="description"
               placeholder="Task details..."
             ></textarea>
-            <small *ngIf="isInvalid('description')" class="text-danger">Description is required</small>
+            <small *ngIf="isInvalid('description')" class="text-danger"
+              >Description is required</small
+            >
           </div>
 
           <!-- Priority -->
@@ -104,7 +121,9 @@
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
-            <small *ngIf="isInvalid('priority')" class="text-danger">Priority is required</small>
+            <small *ngIf="isInvalid('priority')" class="text-danger"
+              >Priority is required</small
+            >
           </div>
 
           <!-- Date -->
@@ -116,7 +135,9 @@
               class="form-control bg-dark text-white border-secondary"
               formControlName="date"
             />
-            <small *ngIf="isInvalid('date')" class="text-danger">Date is required</small>
+            <small *ngIf="isInvalid('date')" class="text-danger"
+              >Date is required</small
+            >
           </div>
 
           <!-- Buttons -->
@@ -129,12 +150,12 @@
               Add Task
             </button>
             <button
-  type="button"
-  class="btn btn-outline-light px-4"
-  (click)="closeModal()"
->
-  Cancel
-</button>
+              type="button"
+              class="btn btn-outline-light px-4"
+              (click)="closeModal()"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>

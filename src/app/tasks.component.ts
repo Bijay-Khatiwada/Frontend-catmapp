@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WebService } from './web.service';
 import { AuthService } from '@auth0/auth0-angular';
 
@@ -7,75 +7,83 @@ import { AuthService } from '@auth0/auth0-angular';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent {
+export class TasksComponent implements OnInit {
   tasks_list: any[] = [];
   allTasks: any[] = [];
   sortOption: string = 'priority';
   layout: string = 'grid';
   statusFilter: string = 'all';
   searchText: string = '';
-  statusFilterOptions = ['all', 'not-started', 'in-progress', 'completed', 'not-completed'];
   showAddTaskModal = false;
 
-
-  constructor(public webService: WebService, authService: AuthService) {}
+  constructor(public webService: WebService, public authService: AuthService) {}
 
   ngOnInit() {
+    this.getAllTasks();
+  }
+
+  getAllTasks(): void {
     this.webService.getTasksObservable().subscribe((tasks: any[]) => {
       this.allTasks = tasks;
       this.applySorting();
     });
   }
-  closeAddTaskModal() {
-  this.showAddTaskModal = false;
-}
 
-  applySorting() {
-  // Step 1: Filter
-  this.tasks_list = this.allTasks.filter(task => {
-    const matchesStatus =
-      this.statusFilter === 'all' || task.status === this.statusFilter;
+  openAddTaskModal(): void {
+    this.showAddTaskModal = true;
+  }
 
-    const matchesSearch =
-      !this.searchText || task.name.toLowerCase().includes(this.searchText.toLowerCase());
+  closeAddTaskModal(): void {
+    this.showAddTaskModal = false;
+  }
 
-    return matchesStatus && matchesSearch;
-  });
+  handleTaskAdded(): void {
+    this.getAllTasks();          // Re-fetch task list
+    this.closeAddTaskModal();    // Close modal
+  }
 
-  // Step 2: Sort
-  const priorityOrder: { [key: string]: number } = {
-    'High': 1,
-    'Medium': 2,
-    'Low': 3
-  };
+  applySorting(): void {
+    this.tasks_list = this.allTasks.filter(task => {
+      const matchesStatus =
+        this.statusFilter === 'all' || task.status === this.statusFilter;
 
-  this.tasks_list.sort((a, b) => {
-    if (this.sortOption === 'priority') {
-      const priorityA = priorityOrder[a.priority] ?? 99;
-      const priorityB = priorityOrder[b.priority] ?? 99;
-      return priorityA - priorityB;
-    }
+      const matchesSearch =
+        !this.searchText || task.name.toLowerCase().includes(this.searchText.toLowerCase());
 
-    if (this.sortOption === 'date') {
-      const dateA = new Date(a.date.split('-').reverse().join('-'));
-      const dateB = new Date(b.date.split('-').reverse().join('-'));
-      return dateA.getTime() - dateB.getTime();
-    }
+      return matchesStatus && matchesSearch;
+    });
 
-    if (this.sortOption === 'status') {
-      const statusOrder: { [key: string]: number } = {
-        'Not Started': 1,
-        'In Progress': 2,
-        'Completed': 3
-      };
-      return (statusOrder[a.status] ?? 99) - (statusOrder[b.status] ?? 99);
-    }
+    const priorityOrder: { [key: string]: number } = {
+      'High': 1,
+      'Medium': 2,
+      'Low': 3
+    };
 
-    return 0;
-  });
-}
+    this.tasks_list.sort((a, b) => {
+      if (this.sortOption === 'priority') {
+        const priorityA = priorityOrder[a.priority] ?? 99;
+        const priorityB = priorityOrder[b.priority] ?? 99;
+        return priorityA - priorityB;
+      }
 
+      if (this.sortOption === 'date') {
+        const dateA = new Date(a.date.split('-').reverse().join('-'));
+        const dateB = new Date(b.date.split('-').reverse().join('-'));
+        return dateA.getTime() - dateB.getTime();
+      }
 
+      if (this.sortOption === 'status') {
+        const statusOrder: { [key: string]: number } = {
+          'Not Started': 1,
+          'In Progress': 2,
+          'Completed': 3
+        };
+        return (statusOrder[a.status] ?? 99) - (statusOrder[b.status] ?? 99);
+      }
+
+      return 0;
+    });
+  }
 
   isTaskOverdue(task: any): boolean {
     const taskDate = new Date(task.date.split('-').reverse().join('-'));
@@ -96,7 +104,7 @@ export class TasksComponent {
     return task.status === 'Completed';
   }
 
-  delete_data(TaskId: string) {
+  delete_data(TaskId: string): void {
     if (confirm('Are you sure you want to delete this task?')) {
       this.webService.deleteTask(TaskId).subscribe(
         () => {
